@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Разговорник на Петте езика на ученето</title>
+  <style>
+    :root{
+      --text:#1f2430;
+      --muted:#667085;
+      --line:#e6e8ef;
+      --accent:#5b6cff;
+      --accent-2:#7f56d9;
+      --growth:#1f8f5f;
+      --thinking:#2563eb;
+      --community:#c2410c;
+      --play:#a855f7;
+      --agency:#0f766e;
+      --shadow:0 10px 30px rgba(24,39,75,.08);
+      --success:#0a7f53;
+      --danger:#ef4444;
+      --bg-soft:#fafbff;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background:linear-gradient(180deg,#f8f8fd 0%,#f4f6fb 100%);
+      color:var(--text);
+    }
+
+    .wrap{
+      max-width:1180px;
+      margin:0 auto;
+      padding:28px 18px 56px;
+    }
+
+    .hero,.panel{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .hero{
+      padding:30px;
+      margin-bottom:22px;
+      background:
+        radial-gradient(circle at top left, rgba(91,108,255,.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(127,86,217,.12), transparent 25%),
+        #fff;
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size:clamp(28px,4vw,42px);
+      line-height:1.08;
+      letter-spacing:-.02em;
+    }
+
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:17px;
+      max-width:850px;
+      line-height:1.55;
+    }
+
+    .top-actions,.utility-row,.chips,.saved-list{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .top-actions{margin-top:18px}
+
+    .grid{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    @media(max-width:920px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      padding:12px 16px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:600;
+      transition:.18s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:var(--shadow);
+    }
+
+    .btn.primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:#fff;
+      border:none;
+    }
+
+    .btn.success{
+      background:linear-gradient(135deg,#0a7f53,#14b86f);
+      color:#fff;
+      border:none;
+    }
+
+    .hd{
+      padding:18px 18px 10px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .hd h2{
+      margin:0 0 6px;
+      font-size:18px;
+    }
+
+    .hd p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .phrase-list{
+      padding:10px;
+      display:grid;
+      gap:8px;
+      max-height:70vh;
+      overflow:auto;
+    }
+
+    .phrase-btn{
+      text-align:left;
+      width:100%;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:16px;
+      padding:14px;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .phrase-btn:hover{
+      border-color:#cfd5e6;
+      transform:translateY(-1px);
+    }
+
+    .phrase-btn.active{
+      border-color:rgba(91,108,255,.35);
+      background:rgba(91,108,255,.06);
+      box-shadow:inset 0 0 0 1px rgba(91,108,255,.10);
+    }
+
+    .phrase-title{
+      display:block;
+      font-size:15px;
+      line-height:1.35;
+      font-weight:700;
+      margin-bottom:4px;
+    }
+
+    .phrase-meta{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .intro-empty{
+      padding:34px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .section{
+      padding:22px 24px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .section:last-child{border-bottom:none}
+
+    .eyebrow{
+      display:inline-block;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--muted);
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .student-line{
+      font-size:clamp(24px,2.8vw,34px);
+      line-height:1.18;
+      letter-spacing:-.02em;
+      margin:0;
+    }
+
+    .chip{
+      padding:8px 10px;
+      border-radius:999px;
+      background:#f4f6fb;
+      border:1px solid var(--line);
+      font-size:13px;
+      color:#334155;
+    }
+
+    ul.clean{
+      margin:10px 0 0;
+      padding-left:20px;
+      line-height:1.65;
+    }
+
+    .cards{
+      display:grid;
+      gap:12px;
+    }
+
+    .mini-card{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      background:#fff;
+    }
+
+    .bad{
+      border-left:4px solid var(--danger);
+      background:#fff8f8;
+    }
+
+    .lang-card{border-left:4px solid var(--line)}
+    .lang-growth{border-left-color:var(--growth)}
+    .lang-thinking{border-left-color:var(--thinking)}
+    .lang-community{border-left-color:var(--community)}
+    .lang-play{border-left-color:var(--play)}
+    .lang-agency{border-left-color:var(--agency)}
+
+    .lang-name{
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .lang-name span,
+    .muted,
+    .copy-hint,
+    .footer-note,
+    .status-note{color:var(--muted)}
+
+    .lang-name span{font-weight:600}
+
+    .quote{
+      font-size:18px;
+      line-height:1.5;
+      font-weight:650;
+      margin:8px 0 0;
+    }
+
+    .world-box{
+      background:linear-gradient(135deg,rgba(91,108,255,.07),rgba(127,86,217,.06));
+      border:1px solid rgba(91,108,255,.16);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .world-box h3{
+      margin:0 0 8px;
+      font-size:16px;
+    }
+
+    .footer-note{
+      padding:18px 24px;
+      font-size:13px;
+      line-height:1.55;
+      background:var(--bg-soft);
+    }
+
+    .saved-pill,.saved-tag{
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+      font-size:12px;
+    }
+
+    .saved-pill{
+      font-size:13px;
+      color:#475467;
+    }
+
+    .copy-hint{
+      font-size:12px;
+      margin-top:10px;
+    }
+
+    .status-bar{
+      margin-top:12px;
+      min-height:22px;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .status-success{color:var(--success)}
+    .status-error{color:#b42318}
+
+    .manual-copy{
+      margin-top:14px;
+      display:none;
+      border:1px dashed #cbd5e1;
+      border-radius:16px;
+      padding:12px;
+      background:#fcfcff;
+    }
+
+    .manual-copy.active{display:block}
+
+    .manual-copy textarea{
+      width:100%;
+      min-height:120px;
+      resize:vertical;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      font:inherit;
+      color:var(--text);
+      background:#fff;
+    }
+
+    .manual-copy p{
+      margin:0 0 10px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .hidden-copy-source{
+      position:absolute;
+      left:-9999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Разговорник на Петте езика на ученето</h1>
+      <p class="sub">Мини инструмент за учители: избери реплика, която често чуваш в класната стая, и виж какво може да стои зад нея, какво често казваме на автопилот и какво бихме могли да пробваме вместо това чрез пет различни езика на ученето.</p>
+      <div class="top-actions">
+        <button class="btn primary" id="copyAppIntro">Копирай кратко описание</button>
+        <button class="btn" id="showRandom">Покажи ми случайна реплика</button>
+        <button class="btn" id="clearSaved">Изчисти запазените</button>
+      </div>
+      <div id="statusBar" class="status-bar status-note" aria-live="polite"></div>
+      <div id="manualCopyBox" class="manual-copy" aria-live="polite">
+        <p>Копирането към клипборда е ограничено в тази среда. Маркирай текста от полето по-долу и го копирай ръчно.</p>
+        <textarea id="manualCopyText" readonly></textarea>
+      </div>
+    </section>
+
+    <div class="grid">
+      <aside class="panel">
+        <div class="hd">
+          <h2>Какво чу в класната стая?</h2>
+          <p>Избери една реплика. Инструментът е направен за бърза ориентация, не за оценяване.</p>
+          <div class="saved-list" id="savedList"></div>
+        </div>
+        <div class="phrase-list" id="phraseList"></div>
+      </aside>
+
+      <main class="panel">
+        <div id="contentArea" class="intro-empty">Избери реплика отляво, за да видиш кратък прочит на ситуацията и възможни отговори през петте езика на ученето.</div>
+      </main>
+    </div>
+  </div>
+
+  <textarea id="hiddenCopySource" class="hidden-copy-source" aria-hidden="true"></textarea>
+
+  <script>
+    const data = [
+      {
+        id: "stupid",
+        title: "„Всички разбраха, само аз не. Явно съм глупав/а.“",
+        meta: "срам · фиксирана самооценка · уязвимост",
+        behind: [
+          "срам и социално сравнение",
+          "страх, че трудността е знак за неспособност",
+          "нужда някой да отдели трудността от личната стойност"
+        ],
+        autopilot: [
+          "„Не говори така.“",
+          "„Не си глупав/а, просто слушай по-внимателно.“",
+          "„Хайде, това е лесно.“"
+        ],
+        world: "Тази реплика носи риск ученикът да превърне временната трудност в трайна история за себе си.",
+        languages: [
+          { type: "growth", name: "Език на растежа", effect: "отделя трудността от идентичността", line: "„Това, че още не ти е ясно, не значи, че не можеш. Кажи ми докъде стигна.“" },
+          { type: "thinking", name: "Език на мисленето", effect: "връща към мисловния процес", line: "„Къде точно се скъса нишката за теб?“" },
+          { type: "community", name: "Език на общността", effect: "прави участието по-безопасно", line: "„Тук не е нужно всички да разбират по едно и също време.“" },
+          { type: "play", name: "Език на играта", effect: "сваля напрежението и отваря нов ход", line: "„Хайде да го пробваме по друг начин — все едно разплитаме възел.“" },
+          { type: "agency", name: "Език на самостоятелността", effect: "връща малък контрол на ученика", line: "„Искаш ли първо да ми покажеш какво вече знаеш, а после да продължим оттам?“" }
+        ]
+      },
+      {
+        id: "test",
+        title: "„Това ще го има ли на контролното?“",
+        meta: "тревожност · инструментално учене · минимизиране на усилието",
+        behind: [
+          "опит да се намали несигурността",
+          "учене, сведено до оцеляване и подбор на „важното“",
+          "слаб личен смисъл към съдържанието"
+        ],
+        autopilot: [
+          "„Всичко е важно.“",
+          "„Не задавай глупави въпроси.“",
+          "„Сега не е това важното.“"
+        ],
+        world: "Тази реплика често не е мързел, а сигнал, че ученикът е в режим на стратегическо оцеляване, не на разбиране.",
+        languages: [
+          { type: "growth", name: "Език на растежа", effect: "премества фокуса от изпитването към развитието", line: "„Нека видим кое тук си струва да разбереш, дори и да не се падне.“" },
+          { type: "thinking", name: "Език на мисленето", effect: "връща към смисъла и структурата", line: "„Как според теб това се връзва с голямата тема?“" },
+          { type: "community", name: "Език на общността", effect: "нормализира въпроса, без да затваря мисленето", line: "„Много ученици си задават точно този въпрос. Хайде да видим как разбираме кое е важно.“" },
+          { type: "play", name: "Език на играта", effect: "отваря любопитство вместо стесняване", line: "„Добре, а ако ти трябваше да измислиш въпрос за контролното, какво би включил/а?“" },
+          { type: "agency", name: "Език на самостоятелността", effect: "връща отговорност за преценка", line: "„По какво би познал/а сам/а, че това е важно?“" }
+        ]
+      },
+      {
+        id: "public",
+        title: "„Не искам да отговарям пред всички.“",
+        meta: "социален риск · страх от излагане · свито участие",
+        behind: [
+          "страх от подигравка или грешка пред публика",
+          "преживяване на класната стая като опасно място за глас",
+          "неувереност в това как ще бъде приет/а"
+        ],
+        autopilot: [
+          "„Няма от какво да те е страх.“",
+          "„Ще отговаряш, както всички.“",
+          "„Стига глезотии.“"
+        ],
+        world: "Въпросът не е само дали ученикът ще проговори. Въпросът е какво научава за това дали тук е безопасно да има глас.",
+        languages: [
+          { type: "growth", name: "Език на растежа", effect: "нормализира трудността на участието", line: "„Добре е, че го казваш. И това се учи постепенно.“" },
+          { type: "thinking", name: "Език на мисленето", effect: "пази фокуса върху идеята, не само върху представянето", line: "„Нека първо чуем мисълта ти по начин, който ти е по-спокоен.“" },
+          { type: "community", name: "Език на общността", effect: "прави включването обща отговорност", line: "„Важно е гласът ти да има място тук. Нека намерим форма, в която да се включиш по-спокойно.“" },
+          { type: "play", name: "Език на играта", effect: "сваля напрежението чрез по-лек вход", line: "„Искаш ли първо да го кажеш на съученик, а после да го кажем заедно?“" },
+          { type: "agency", name: "Език на самостоятелността", effect: "връща избор върху формата на участие", line: "„Искаш ли да кажеш, да напишеш или първо да покажеш?“" }
+        ]
+      },
+      {
+        id: "group",
+        title: "„Не искам да работя с тях.“",
+        meta: "липса на доверие · социално напрежение · защита",
+        behind: [
+          "предишен лош опит в групова работа",
+          "усещане за несправедливост или неравно участие",
+          "страх, че пак ще бъде натоварен/а или подценен/а"
+        ],
+        autopilot: [
+          "„Ще работиш с тях, няма как.“",
+          "„Стига сте се карали.“",
+          "„Оправяйте се.“"
+        ],
+        world: "Тази реплика не е просто за организация. Тя казва нещо за доверие, принадлежност и правилата на съвместната работа.",
+        languages: [
+          { type: "growth", name: "Език на растежа", effect: "рамкира трудността като развиваема", line: "„Явно тук има нещо трудно. Хайде да видим какво точно трябва да направим по-работещо.“" },
+          { type: "thinking", name: "Език на мисленето", effect: "помага да се назове проблемът по-ясно", line: "„Какво точно прави работата с тях трудна за теб?“" },
+          { type: "community", name: "Език на общността", effect: "превръща ситуацията в обща задача за уреждане", line: "„Нека уточним как ще работите така, че всеки да има роля и глас.“" },
+          { type: "play", name: "Език на играта", effect: "отваря възможност за нов формат", line: "„Хайде да пробваме различен начин на разпределяне на ролите и да видим дали ще тръгне.“" },
+          { type: "agency", name: "Език на самостоятелността", effect: "връща усещане за избор в рамки", line: "„Искаш ли да предложиш при какви условия би било по-поносимо да работиш в група?“" }
+        ]
+      },
+      {
+        id: "cant",
+        title: "„Не мога.“",
+        meta: "блокаж · претоварване · научена безпомощност",
+        behind: [
+          "не знае откъде да започне",
+          "преживява задачата като твърде голяма",
+          "очаква бързо да бъде преценен/а"
+        ],
+        autopilot: [
+          "„Можеш, хайде.“",
+          "„Това е лесно.“",
+          "„Другите могат, и ти можеш.“"
+        ],
+        world: "Понякога „не мога“ не значи отказ. Значи „не виждам първата стъпка“.",
+        languages: [
+          { type: "growth", name: "Език на растежа", effect: "държи възможността жива", line: "„Още не можеш. Нека видим откъде да започнем.“" },
+          { type: "thinking", name: "Език на мисленето", effect: "изяснява къде е блокажът", line: "„Кое точно ти изглежда неясно или твърде трудно?“" },
+          { type: "community", name: "Език на общността", effect: "сваля срама от затруднението", line: "„Нормално е да заседнем. Нека го разплетем заедно.“" },
+          { type: "play", name: "Език на играта", effect: "прави първия ход по-лек", line: "„Хайде само да пробваме първия ход, без да мислим за цялото.“" },
+          { type: "agency", name: "Език на самостоятелността", effect: "връща малък контрол", line: "„Искаш ли първо сам/а да опиташ един ход или да ти дам първа следа?“" }
+        ]
+      },
+      {
+        id: "boring",
+        title: "„Това е тъпо.“",
+        meta: "отдръпване · защита · липса на смисъл",
+        behind: [
+          "не вижда смисъл или връзка със себе си",
+          "скрива несигурност зад ирония или отхвърляне",
+          "реагира на ниска включеност"
+        ],
+        autopilot: [
+          "„Тъпо ти е, защото не слушаш.“",
+          "„Не говори така.“",
+          "„Щом е тъпо, значи проблемът е в теб.“"
+        ],
+        world: "Зад пренебрежението често стои отдръпване от задачата и от риска да се срещнеш сериозно с нея.",
+        languages: [
+          { type: "growth", name: "Език на растежа", effect: "не фиксира отхвърлянето като крайна истина", line: "„Може засега да не ти говори нищо. Да видим дали можем да намерим вход към него.“" },
+          { type: "thinking", name: "Език на мисленето", effect: "кани към разграничаване и аргументация", line: "„Кое точно ти изглежда безсмислено?“" },
+          { type: "community", name: "Език на общността", effect: "пази общото пространство за мислене", line: "„Можем да не сме съгласни, но нека кажем защо по начин, който помага на всички да мислим.“" },
+          { type: "play", name: "Език на играта", effect: "отваря друг вход", line: "„Добре, ако трябва да направим това по по-интересен начин, как би изглеждало?“" },
+          { type: "agency", name: "Език на самостоятелността", effect: "връща участие в промяната", line: "„Какво би помогнало това да ти стане по-смислено?“" }
+        ]
+      }
+    ];
+
+    const contentArea = document.getElementById('contentArea');
+    const phraseList = document.getElementById('phraseList');
+    const savedList = document.getElementById('savedList');
+    const statusBar = document.getElementById('statusBar');
+    const manualCopyBox = document.getElementById('manualCopyBox');
+    const manualCopyText = document.getElementById('manualCopyText');
+    const hiddenCopySource = document.getElementById('hiddenCopySource');
+
+    const langClass = {
+      growth: 'lang-growth',
+      thinking: 'lang-thinking',
+      community: 'lang-community',
+      play: 'lang-play',
+      agency: 'lang-agency'
+    };
+
+    function setStatus(message, type = 'note') {
+      statusBar.textContent = message;
+      statusBar.className = 'status-bar';
+      if (type === 'success') statusBar.classList.add('status-success');
+      else if (type === 'error') statusBar.classList.add('status-error');
+      else statusBar.classList.add('status-note');
+    }
+
+    function showManualCopy(text, message) {
+      manualCopyText.value = text;
+      manualCopyBox.classList.add('active');
+      manualCopyText.focus();
+      manualCopyText.select();
+      setStatus(message || 'Копирай ръчно текста от полето по-долу.', 'error');
+    }
+
+    function hideManualCopy() {
+      manualCopyBox.classList.remove('active');
+      manualCopyText.value = '';
+    }
+
+    async function safeCopy(text, successMessage) {
+      hideManualCopy();
+
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          setStatus(successMessage || 'Текстът е копиран.', 'success');
+          return true;
+        } catch (error) {
+          // Continue to fallback below.
+        }
+      }
+
+      try {
+        hiddenCopySource.value = text;
+        hiddenCopySource.focus();
+        hiddenCopySource.select();
+        const ok = document.execCommand('copy');
+        if (ok) {
+          setStatus(successMessage || 'Текстът е копиран.', 'success');
+          return true;
+        }
+      } catch (error) {
+        // Continue to manual fallback.
+      }
+
+      showManualCopy(text, 'Автоматичното копиране е ограничено в тази среда.');
+      return false;
+    }
+
+    function getSaved() {
+      try {
+        return JSON.parse(localStorage.getItem('fiveLanguagesSaved') || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function setSaved(ids) {
+      localStorage.setItem('fiveLanguagesSaved', JSON.stringify(ids));
+      renderSaved();
+    }
+
+    function toggleSaved(id) {
+      const saved = getSaved();
+      if (saved.includes(id)) {
+        setSaved(saved.filter(x => x !== id));
+        setStatus('Репликата е премахната от запазените.', 'note');
+      } else {
+        setSaved([...saved, id]);
+        setStatus('Репликата е запазена.', 'success');
+      }
+    }
+
+    function renderSaved() {
+      const saved = getSaved();
+      if (!saved.length) {
+        savedList.innerHTML = '<span class="saved-pill">Нямаш запазени реплики</span>';
+        return;
+      }
+      savedList.innerHTML = saved.map(id => {
+        const item = data.find(d => d.id === id);
+        return `<span class="saved-tag">${item ? item.title.slice(1, 30) + '…' : id}</span>`;
+      }).join('');
+    }
+
+    function renderList(activeId) {
+      phraseList.innerHTML = data.map(item => `
+        <button class="phrase-btn ${item.id === activeId ? 'active' : ''}" onclick="selectPhrase('${item.id}')">
+          <span class="phrase-title">${item.title}</span>
+          <span class="phrase-meta">${item.meta}</span>
+        </button>
+      `).join('');
+    }
+
+    function buildContent(item) {
+      const saved = getSaved().includes(item.id);
+      return `
+        <section class="section">
+          <div class="eyebrow">Ученическа реплика</div>
+          <h2 class="student-line">${item.title}</h2>
+          <div class="chips">
+            ${item.meta.split('·').map(x => `<span class="chip">${x.trim()}</span>`).join('')}
+          </div>
+          <div class="utility-row">
+            <button class="btn ${saved ? 'primary' : ''}" onclick="handleSaveAndRefresh('${item.id}')">${saved ? 'Запазена ✓' : 'Запази'}</button>
+            <button class="btn" onclick="copyPhrase('${item.id}')">Копирай тази страница</button>
+          </div>
+          <div class="copy-hint">Можеш да копираш и ползваш това като бърза подготовка за час, супервизия или разговор в екип.</div>
+        </section>
+
+        <section class="section">
+          <div class="eyebrow">Какво може да стои зад това</div>
+          <ul class="clean">
+            ${item.behind.map(x => `<li>${x}</li>`).join('')}
+          </ul>
+        </section>
+
+        <section class="section">
+          <div class="eyebrow">Какво често казваме на автопилот</div>
+          <div class="cards">
+            ${item.autopilot.map(x => `<div class="mini-card bad"><div class="quote">${x}</div></div>`).join('')}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="eyebrow">Какво отваря всеки от петте езика</div>
+          <div class="cards">
+            ${item.languages.map(l => `
+              <div class="mini-card lang-card ${langClass[l.type]}">
+                <div class="lang-name">${l.name} <span>· ${l.effect}</span></div>
+                <div class="quote">${l.line}</div>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="world-box">
+            <h3>Какъв свят създава тази реплика?</h3>
+            <div class="muted">${item.world}</div>
+          </div>
+        </section>
+
+        <section class="footer-note">
+          Този инструмент не търси „перфектната реплика“. Той помага да чуем по-ясно какво прави езикът ни: дали отваря мислене, участие и движение, или затваря ситуацията възможно най-бързо.
+        </section>
+      `;
+    }
+
+    function selectPhrase(id) {
+      const item = data.find(d => d.id === id);
+      renderList(id);
+      contentArea.innerHTML = buildContent(item);
+    }
+
+    function buildCopyText(item) {
+      return [
+        item.title,
+        '',
+        'Какво може да стои зад това:',
+        ...item.behind.map(x => '• ' + x),
+        '',
+        'Какво често казваме на автопилот:',
+        ...item.autopilot.map(x => '• ' + x),
+        '',
+        'Възможни отговори през петте езика:',
+        ...item.languages.map(l => `• ${l.name}: ${l.line}`),
+        '',
+        'Какъв свят създава тази реплика:',
+        item.world
+      ].join('\n');
+    }
+
+    async function copyPhrase(id) {
+      const item = data.find(d => d.id === id);
+      const text = buildCopyText(item);
+      await safeCopy(text, 'Текстът за репликата е копиран.');
+    }
+
+    function handleSaveAndRefresh(id) {
+      toggleSaved(id);
+      selectPhrase(id);
+    }
+
+    document.getElementById('showRandom').addEventListener('click', () => {
+      const item = data[Math.floor(Math.random() * data.length)];
+      selectPhrase(item.id);
+      setStatus('Показана е случайна реплика.', 'note');
+    });
+
+    document.getElementById('clearSaved').addEventListener('click', () => {
+      localStorage.removeItem('fiveLanguagesSaved');
+      renderSaved();
+      setStatus('Запазените реплики са изчистени.', 'note');
+    });
+
+    document.getElementById('copyAppIntro').addEventListener('click', async () => {
+      const text = 'Разговорник на Петте езика на ученето — мини инструмент за учители. Избираш често чувана ученическа реплика и виждаш какво може да стои зад нея, какво често казваме на автопилот и какво бихме могли да пробваме вместо това през пет различни езика на ученето.';
+      await safeCopy(text, 'Краткото описание е копирано.');
+    });
+
+    // Basic smoke tests for development/debugging.
+    console.assert(Array.isArray(data) && data.length >= 6, 'Очаква се масив с реплики.');
+    console.assert(data.every(item => item.languages && item.languages.length === 5), 'Всяка реплика трябва да има 5 езикови отговора.');
+    console.assert(typeof buildCopyText(data[0]) === 'string' && buildCopyText(data[0]).length > 20, 'Текстът за копиране трябва да се генерира коректно.');
+
+    renderList();
+    renderSaved();
+    selectPhrase('stupid');
+    setStatus('Избери реплика отляво или пробвай случайна.', 'note');
+
+    window.selectPhrase = selectPhrase;
+    window.copyPhrase = copyPhrase;
+    window.handleSaveAndRefresh = handleSaveAndRefresh;
+  </script>
+</body>
+</html>
